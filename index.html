@@ -37,10 +37,11 @@
             var point_sound = new Audio('audio/sfx_point.ogg');
             var swoosh_sound = new Audio('audio/sfx_swooshing.ogg');
             var wing_sound = new Audio('audio/sfx_wing.ogg');
-
+            var one  = 0;
+            var two = 1;
+            var timeout = 0;
 
             var
-
             // Game vars //
             canvas,
             ctx,
@@ -174,6 +175,8 @@
              */
             reset: function() {
                 this._pipes = [];
+                one = 0
+                two = 2
             },
 
             /**
@@ -198,6 +201,13 @@
                     if (i === 0) {
 
                         score += p.x === bird.x ? 1 : 0;
+
+                        /*if the bird is good to go then play the sound*/
+                        if (p.x === bird.x){
+                            point_sound.play()
+                        }
+
+
 
                         // collision check, calculates x/y difference and
                         // use normal vector length calculation to determine
@@ -404,7 +414,17 @@
                 s_text.GetReady.draw(ctx, width2 - s_text.GetReady.width/2, height-380);
 
             }
+
             if (currentstate === states.Score) {
+                if (one === 0){
+                    hit_sound.play()
+                    one = 1
+                    two = 2
+                }
+                if (two === 2){
+                    timeout = setTimeout(playDeath, 300)
+                    two = 1
+                }
                 // draw gameover text and score board
                 s_text.GameOver.draw(ctx, width2 - s_text.GameOver.width/2, height-400);
                 s_score.draw(ctx, width2 - s_score.width/2, height-340);
@@ -420,6 +440,11 @@
             }
         }
 
+        function playDeath() {
+            death_sound.play()
+            clearTimeout(timeout)
+
+        }
         // start and run the game
         main();
             </script>
