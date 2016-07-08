@@ -312,6 +312,11 @@
 
             // listen for input event
             document.addEventListener(evt, onpress);
+            document.addEventListener("keypress", function(e) {
+                if (e.keyCode === 32){
+                    onpress(e)
+                }
+            })
 
             canvas.width = width;
             canvas.height = height;
