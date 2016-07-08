@@ -8,12 +8,14 @@ var app = express();
 
 /*our middleware to server static assets and favicons*/
 app.use(express.static( __dirname ));
+/*we tell express where to find the favicon*/
 app.use(favicon( __dirname + "/flappy.png" ));
 
 /*we define a ROOT route so upon hitting flappy.ruelas.me we can respond with our main file*/
 app.get('/', function(req, res) {
 	res.sendFile('index.html');
 });
+
 
 /*we are listening on port 8083 cause thats how I roll*/
 app.listen(8083, function() {
